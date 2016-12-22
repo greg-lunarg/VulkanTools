@@ -2840,18 +2840,8 @@ bool ReadDriverJson(std::string cur_driver_json, bool &found_lib) {
                     found_lib = true;
                 }
             }
-            if (!found_lib) {
-                snprintf(generic_string, MAX_STRING_LENGTH - 1,
-                         "Failed to find driver %s "
-                         "referenced by JSON %s",
-                         full_driver_path, cur_driver_json.c_str());
-                PrintBeginTableRow();
-                PrintTableElement("");
-                PrintTableElement("");
-                PrintTableElement(generic_string);
-                PrintEndTableRow();
-            }
-        } else {
+        }
+        if (!found_lib) {
             FILE *fp;
             sprintf(generic_string,
                     "/sbin/ldconfig -v -N -p | grep %s | awk \'{ print $4 }\'",
@@ -2864,7 +2854,7 @@ bool ReadDriverJson(std::string cur_driver_json, bool &found_lib) {
                          driver_name.c_str(), cur_driver_json.c_str());
                 PrintBeginTableRow();
                 PrintTableElement("");
-                PrintTableElement("ERROR");
+                PrintTableElement("");
                 PrintTableElement(generic_string);
                 PrintEndTableRow();
             } else {
